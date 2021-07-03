@@ -2,10 +2,10 @@
 
 int main(int argc, char** argv)
 {
-
+    /*
     std::ifstream in("../input/1.txt");
     std::cin.rdbuf(in.rdbuf());
-
+    */
     size_t N = (argc > 1) ? atoi(argv[1]) : 3;
 
     CommandBlock a;
