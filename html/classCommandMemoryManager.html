@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>My Project: IOManager&lt; T &gt; Class Template Reference</title>
+<title>My Project: CommandMemoryManager Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -63,29 +63,32 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="classIOManager-members.html">List of all members</a>  </div>
+<a href="classCommandMemoryManager-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">IOManager&lt; T &gt; Class Template Reference</div>  </div>
+<div class="title">CommandMemoryManager Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a24ebc00ef129914b60f1001ecba5feca"><td class="memItemLeft" align="right" valign="top"><a id="a24ebc00ef129914b60f1001ecba5feca"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>IOManager</b> (size_t N)</td></tr>
-<tr class="separator:a24ebc00ef129914b60f1001ecba5feca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a063406ac6f93eee8ececc9c8d3699e8d"><td class="memItemLeft" align="right" valign="top"><a id="a063406ac6f93eee8ececc9c8d3699e8d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Interpret</b> (string command, T &amp;block)</td></tr>
-<tr class="separator:a063406ac6f93eee8ececc9c8d3699e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1194f945d8c60a3cb8e6d0fad26f511"><td class="memItemLeft" align="right" valign="top"><a id="ab1194f945d8c60a3cb8e6d0fad26f511"></a>
+<tr class="memitem:aa2f0533d2352a08a873db6f81ef4c4c8"><td class="memItemLeft" align="right" valign="top"><a id="aa2f0533d2352a08a873db6f81ef4c4c8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>CommandMemoryManager</b> (size_t N)</td></tr>
+<tr class="separator:aa2f0533d2352a08a873db6f81ef4c4c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad2d62a7c68baaffc2bb28999c5c06b2"><td class="memItemLeft" align="right" valign="top"><a id="aad2d62a7c68baaffc2bb28999c5c06b2"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Interpret</b> (string command)</td></tr>
+<tr class="separator:aad2d62a7c68baaffc2bb28999c5c06b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6ce5c93950e934473e39e5f1b5001f0"><td class="memItemLeft" align="right" valign="top"><a id="ae6ce5c93950e934473e39e5f1b5001f0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Refresh</b> ()</td></tr>
-<tr class="separator:ab1194f945d8c60a3cb8e6d0fad26f511"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf9c97dfce266846d6178c705bf909e4"><td class="memItemLeft" align="right" valign="top"><a id="aaf9c97dfce266846d6178c705bf909e4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Output</b> (const T &amp;block)</td></tr>
-<tr class="separator:aaf9c97dfce266846d6178c705bf909e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a525398d8ee7c637a33c81a20f63307f9"><td class="memItemLeft" align="right" valign="top"><a id="a525398d8ee7c637a33c81a20f63307f9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>OutputToFile</b> (const T &amp;block)</td></tr>
-<tr class="separator:a525398d8ee7c637a33c81a20f63307f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:ae6ce5c93950e934473e39e5f1b5001f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e5305e0598b179bc74dc25139830940"><td class="memItemLeft" align="right" valign="top"><a id="a5e5305e0598b179bc74dc25139830940"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>GetBlockStartTimestamp</b> ()</td></tr>
+<tr class="separator:a5e5305e0598b179bc74dc25139830940"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab61fcc22e53a358dc99ee2e4163c2ec7"><td class="memItemLeft" align="right" valign="top"><a id="ab61fcc22e53a358dc99ee2e4163c2ec7"></a>
+vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetCurrentBlock</b> ()</td></tr>
+<tr class="separator:ab61fcc22e53a358dc99ee2e4163c2ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c2cdd31ec4ee40177c7103dcf58fe89"><td class="memItemLeft" align="right" valign="top"><a id="a5c2cdd31ec4ee40177c7103dcf58fe89"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsDynBlock</b> ()</td></tr>
+<tr class="separator:a5c2cdd31ec4ee40177c7103dcf58fe89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="CommandBlock_8h_source.html">CommandBlock.h</a></li>

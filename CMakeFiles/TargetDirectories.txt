@@ -1,3 +1,4 @@
 /home/runner/work/HW6/HW6/CMakeFiles/rebuild_cache.dir
 /home/runner/work/HW6/HW6/CMakeFiles/edit_cache.dir
+/home/runner/work/HW6/HW6/CMakeFiles/test.dir
 /home/runner/work/HW6/HW6/CMakeFiles/bulk.dir
