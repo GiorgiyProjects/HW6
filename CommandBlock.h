@@ -9,104 +9,129 @@
 
 using namespace std;
 
-template <class T>
-class IOManager
+class CommandBlockOutputter
+{
+private:
+public:
+    void Output(vector<string> commands, size_t timestamp)
+    {
+        ofstream f;
+        string s = "bulk" + std::to_string(timestamp) + ".log";
+        f.open(s);
+
+        cout << "bulk:";
+        f << "bulk:";
+        char c = ' ';
+        for (const auto& el:commands)
+        {
+            if (el == "{" || el == "}")
+                continue;
+            f << c << el;
+            cout << c << el;
+            c = ',';
+        }
+        f << endl;
+        cout << endl;
+        f.close();
+    }
+};
+
+class CommandMemoryManager
 {
 private:
     size_t mCurBlockStartTimestamp;
-    size_t mCurCommandIdx; //number of command that is being processed now
+    size_t mCurCommandIdx; //number of command that is being processed (does not contain brackets)
     size_t mN;
-    bool mExpectClosingBracket;
     int mEmbedBracers = 0;
+    vector<string> mCommands;
+    bool mAmDynBlock = false;
 
 public:
-    IOManager(size_t N) : mN(N), mCurCommandIdx(0), mExpectClosingBracket(false)
+    CommandMemoryManager(size_t N) : mN(N)
     {
+        Refresh();
     }
 
-    void Interpret(string command, T& block)
+    bool Interpret(string command)
     {
         if (mCurCommandIdx == 0) {
             const auto p1 = std::chrono::system_clock::now();
             mCurBlockStartTimestamp = std::chrono::duration_cast<std::chrono::seconds>(p1.time_since_epoch()).count();
         }
+
+        if (command != "}" && command != "{") mCurCommandIdx++;
+        mCommands.push_back(command); // does contain brackets
+
         if (command == "}") {
-            if (--mEmbedBracers == 0)
-                mExpectClosingBracket = false;
-            return;
-        }
-        if (command == "{") {
-            if (++mEmbedBracers > 1) //embedded bracket
-                return;
-            Output(block); // new block start
-            OutputToFile(block);
-            Refresh();
-            block.clear();
-            mExpectClosingBracket = true;
-            return;
+            if (--mEmbedBracers == 0) // that is a dyn block finish
+                return true;
+            return false;
         }
 
-        if  ((mCurCommandIdx == mN) && (mEmbedBracers == 0)) // block is finished and
+        if (command == "{") { // this is an emergency exit for the block
+            mAmDynBlock = true;
+            if ((++mEmbedBracers == 1)  && (mCurCommandIdx > 0))
+                return true;
+            return false;
+        }
+
+        if  ((mCurCommandIdx == mN) && (mEmbedBracers == 0)) // block is finished
         {
-            Output(block);
-            OutputToFile(block);
-            Refresh();
-            block.clear();
+            return true;
         }
-
-        mCurCommandIdx++;
-        block.push_back(command);
-        return;
+        return false;
     }
 
     void Refresh()
     {
         mCurCommandIdx = 0;
-        mExpectClosingBracket = false;
-    }
-
-    void Output(const T& block)
-    {
-        if (!mExpectClosingBracket)
-            std::cout << block;
-    }
-
-    void OutputToFile(const T& block)
-    {
-        if (mExpectClosingBracket) return;
-        ofstream f;
-        string s = "bulk" + std::to_string(mCurBlockStartTimestamp) + ".log";
-        f.open(s);
-        f << block;
-        f.close();
-    }
-};
-
-class CommandBlock
-{
-public:
-    vector<string> mCommands;
-public:
-    CommandBlock() = default;
-    void push_back(std::string command)
-    {
-        mCommands.push_back(command);
-    }
-
-    void clear()
-    {
+        mEmbedBracers = 0;
+        if (mCommands.size() > 0 && mCommands[mCommands.size() - 1] == "{") {
+            mEmbedBracers++;
+            mAmDynBlock = true;
+        }
         mCommands.clear();
+        return;
+    }
+
+    size_t GetBlockStartTimestamp()
+    {
+        return mCurBlockStartTimestamp;
+    }
+
+    vector<string> GetCurrentBlock()
+    {
+        return mCommands;
+    }
+
+    bool IsDynBlock()
+    {
+        return mAmDynBlock;
+    }
+
+};
+
+class InputCommandParser
+{
+public:
+    InputCommandParser(std::ifstream& in, CommandMemoryManager& M, CommandBlockOutputter& O)
+    {
+        std::cin.rdbuf(in.rdbuf());
+        string command;
+
+        for(std::string command; std::getline(in, command);)
+        {
+            bool is_complete = M.Interpret(command);
+            if (is_complete)
+            {
+                O.Output(M.GetCurrentBlock(), M.GetBlockStartTimestamp());
+                M.Refresh(); // empty buffers
+            }
+            std::this_thread::sleep_for(1s);
+        }
+
+        if (!M.IsDynBlock()) O.Output(M.GetCurrentBlock(), M.GetBlockStartTimestamp());
+        return;
     }
 };
 
-ostream& operator<<(ostream& os, const CommandBlock& block)
-{
-    os << "bulk:";
-    char c = ' ';
-    for (const auto& el:block.mCommands)
-    {
-        os << c << el;
-        c = ',';
-    }
-    cout << endl;
-}
