@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_SUITE( TestSuite )
             int argc = 1;
             int argv0 = 3;
 
-            std::ifstream in("../input/1.txt");
+            std::ifstream in("input/1.txt");
             size_t N = (argc > 1) ? argv0 : 3;
             CommandMemoryManager M(N);
             CommandBlockOutputter O;
@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_SUITE( TestSuite )
             int argc = 1;
             int argv0 = 3;
 
-            std::ifstream in("../input/2.txt");
+            std::ifstream in("input/2.txt");
             size_t N = (argc > 1) ? argv0 : 3;
             CommandMemoryManager M(N);
             CommandBlockOutputter O;
