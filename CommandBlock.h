@@ -9,8 +9,31 @@
 
 using namespace std;
 
-class CommandBlockOutputter
-{
+class IOutputter {
+public:
+    virtual ~IOutputter(){};
+    virtual void Output(vector<string> commands, size_t timestamp) = 0;
+};
+
+class CommandBlockConsoleOutputter : public IOutputter {
+private:
+public:
+    void Output(vector<string> commands, size_t timestamp)
+    {
+        cout << "bulk:";
+        char c = ' ';
+        for (const auto& el:commands)
+        {
+            if (el == "{" || el == "}")
+                continue;
+            cout << c << el;
+            c = ',';
+        }
+        cout << endl;
+    }
+};
+
+class CommandBlockFileOutputter : public IOutputter {
 private:
 public:
     void Output(vector<string> commands, size_t timestamp)
@@ -19,7 +42,6 @@ public:
         string s = "bulk" + std::to_string(timestamp) + ".log";
         f.open(s);
 
-        cout << "bulk:";
         f << "bulk:";
         char c = ' ';
         for (const auto& el:commands)
@@ -27,11 +49,9 @@ public:
             if (el == "{" || el == "}")
                 continue;
             f << c << el;
-            cout << c << el;
             c = ',';
         }
         f << endl;
-        cout << endl;
         f.close();
     }
 };
@@ -114,7 +134,8 @@ public:
 class InputCommandParser
 {
 public:
-    InputCommandParser(std::ifstream& in, CommandMemoryManager& M, CommandBlockOutputter& O)
+    InputCommandParser() = default;
+    void InterpretInputs(std::ifstream& in, CommandMemoryManager& M)
     {
         std::cin.rdbuf(in.rdbuf());
         string command;
@@ -124,14 +145,32 @@ public:
             bool is_complete = M.Interpret(command);
             if (is_complete)
             {
-                O.Output(M.GetCurrentBlock(), M.GetBlockStartTimestamp());
+                //O.Output(M.GetCurrentBlock(), M.GetBlockStartTimestamp());
+                NotifyOutputters(M);
                 M.Refresh(); // empty buffers
             }
             std::this_thread::sleep_for(1s);
         }
 
-        if (!M.IsDynBlock()) O.Output(M.GetCurrentBlock(), M.GetBlockStartTimestamp());
+        if (!M.IsDynBlock()) NotifyOutputters(M);
         return;
     }
+
+    void Attach(IOutputter *observer) {
+        mListOfSubscribers.push_back(observer);
+    }
+/*
+    void Detach(IOutputter *observer) override {
+        mListOfSubscribers.erase(observer);
+    }
+*/
+    void NotifyOutputters(CommandMemoryManager& M) {
+        for (const auto& o:mListOfSubscribers) {
+            o->Output(M.GetCurrentBlock(), M.GetBlockStartTimestamp());
+        }
+    }
+
+private:
+    std::vector<IOutputter*> mListOfSubscribers;
 };
 

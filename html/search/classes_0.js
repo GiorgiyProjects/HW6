@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['commandblockoutputter_5',['CommandBlockOutputter',['../classCommandBlockOutputter.html',1,'']]],
-  ['commandmemorymanager_6',['CommandMemoryManager',['../classCommandMemoryManager.html',1,'']]],
-  ['cout_5fredirect_7',['cout_redirect',['../structcout__redirect.html',1,'']]]
+  ['commandblockconsoleoutputter_7',['CommandBlockConsoleOutputter',['../classCommandBlockConsoleOutputter.html',1,'']]],
+  ['commandblockfileoutputter_8',['CommandBlockFileOutputter',['../classCommandBlockFileOutputter.html',1,'']]],
+  ['commandmemorymanager_9',['CommandMemoryManager',['../classCommandMemoryManager.html',1,'']]],
+  ['cout_5fredirect_10',['cout_redirect',['../structcout__redirect.html',1,'']]]
 ];

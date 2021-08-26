@@ -3,8 +3,14 @@
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classInputCommandParser_a3de924346fd7c855d451a41437b74726}\label{classInputCommandParser_a3de924346fd7c855d451a41437b74726}} 
-{\bfseries Input\+Command\+Parser} (std\+::ifstream \&in, \mbox{\hyperlink{classCommandMemoryManager}{Command\+Memory\+Manager}} \&M, \mbox{\hyperlink{classCommandBlockOutputter}{Command\+Block\+Outputter}} \&O)
+\mbox{\Hypertarget{classInputCommandParser_a75ec1d6a6a45efd6dc464c2129eb41d8}\label{classInputCommandParser_a75ec1d6a6a45efd6dc464c2129eb41d8}} 
+void {\bfseries Interpret\+Inputs} (std\+::ifstream \&in, \mbox{\hyperlink{classCommandMemoryManager}{Command\+Memory\+Manager}} \&M)
+\item 
+\mbox{\Hypertarget{classInputCommandParser_a434f935c14ff0aa4bab79b587d5da71d}\label{classInputCommandParser_a434f935c14ff0aa4bab79b587d5da71d}} 
+void {\bfseries Attach} (\mbox{\hyperlink{classIOutputter}{IOutputter}} $\ast$observer)
+\item 
+\mbox{\Hypertarget{classInputCommandParser_a765e43428ab16eebc2cfc0d61863ca4e}\label{classInputCommandParser_a765e43428ab16eebc2cfc0d61863ca4e}} 
+void {\bfseries Notify\+Outputters} (\mbox{\hyperlink{classCommandMemoryManager}{Command\+Memory\+Manager}} \&M)
 \end{DoxyCompactItemize}
 
 
