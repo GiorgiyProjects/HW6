@@ -28,8 +28,12 @@ BOOST_AUTO_TEST_SUITE( TestSuite )
             std::ifstream in("input/1.txt");
             size_t N = (argc > 1) ? argv0 : 3;
             CommandMemoryManager M(N);
-            CommandBlockOutputter O;
-            InputCommandParser I(in, M, O);
+            InputCommandParser I;
+            CommandBlockConsoleOutputter* O1 = new CommandBlockConsoleOutputter();
+            I.Attach(O1);
+            CommandBlockFileOutputter* O2 = new CommandBlockFileOutputter();
+            I.Attach(O2);
+            I.InterpretInputs(in, M);
         }
         BOOST_CHECK(output.is_equal ("bulk: cmd1,cmd2,cmd3\n"
                                         "bulk: cmd4,cmd5\n"
@@ -47,8 +51,12 @@ BOOST_AUTO_TEST_SUITE( TestSuite )
             std::ifstream in("input/2.txt");
             size_t N = (argc > 1) ? argv0 : 3;
             CommandMemoryManager M(N);
-            CommandBlockOutputter O;
-            InputCommandParser I(in, M, O);
+            InputCommandParser I;
+            CommandBlockConsoleOutputter* O1 = new CommandBlockConsoleOutputter();
+            I.Attach(O1);
+            CommandBlockFileOutputter* O2 = new CommandBlockFileOutputter();
+            I.Attach(O2);
+            I.InterpretInputs(in, M);
         }
         BOOST_CHECK(output.is_equal ("bulk: cmd1,cmd2\n"
                                         "bulk: cmd3,cmd4\n"
